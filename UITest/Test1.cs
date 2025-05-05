@@ -6,8 +6,7 @@ using OpenQA.Selenium.Support.UI;
 namespace UITest
 {
     [TestClass]
-    public class UnitTest1
-    {
+    public class UnitTest1 {
         private static readonly string DriverDirectory = "C:\\webdrivers";
 
         private static IWebDriver _driver;
@@ -15,7 +14,7 @@ namespace UITest
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            _driver = new ChromeDriver(DriverDirectory); 
+            _driver = new ChromeDriver(DriverDirectory);
         }
 
         [ClassCleanup]
@@ -25,25 +24,40 @@ namespace UITest
         }
 
         [TestMethod]
-        public void TestMethod()
+        public void TestMethodFrontPage()
         {
-            
-            string url = "file:///C:/Users/caspe/Documents/EnergiTommel/index.html";
+
+            string url = "";
             _driver.Navigate().GoToUrl(url);
 
+            //tjekker vi har åbnet rigtig side ved at tjekke titlen.
             Assert.AreEqual("Energi Tommel", _driver.Title);
 
-            //Skal tjekket at energi pris har en værdi
+            //I toppen er prisen lige nu, kaldet energipris tjekker at der står en pris
             IWebElement inputElement1 = _driver.FindElement(By.Id("energiPris"));
             Assert.IsNotNull(inputElement1);
 
+            //tjekker at datoen er rigtig. Ned til timen
+            IWebElement inputElement2 = _driver.FindElement(By.Id("dato og tid nu"));
+            Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy HH"), inputElement2.Text);
+
+            // tjekker om grafen bliver vist
+            IWebElement inputElement3 = _driver.FindElement(By.TagName("Canvas"));
+            bool ShowsGraph = inputElement3.Displayed;
+            Assert.IsTrue(ShowsGraph);
+
+            //tjekker at der nu er valgt københavn
+
+
+
+        }
+        [TestMethod]
+        public void TestMethodLimists()
+        {
+
             //LavGrænse er en dropdown menu, skal vælge en specifik "entry" på listen, tjekke at det passer
-            IWebElement inputElement2 = _driver.FindElement(By.Id("lavGrænse"));
-            inputElement2.Click();
 
 
-
- 
         }
     }
 }
