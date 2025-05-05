@@ -50,17 +50,16 @@ namespace UITest
             Assert.IsTrue(ShowsGraph);
 
             //tjekker at der nu er valgt københavn
-            
-            
-            
-            IWebElement prisvalg = _driver.FindElement(By.Id("Prisområde"));
-            SelectElement select = new SelectElement(prisvalg);
-            select.SelectByText("øst"); 
-            
-                //tjekker om der er står øst efter vi har valgt dropwown menuen
-                
-                IWebElement vistområde = _driver.FindElement(By.Id("PrisområdeNu"));
-            Assert.AreEqual("øst", vistområde.Text);
+
+
+            var selectElement = _driver.FindElement(By.Id("Prisområde"));
+            var select = new SelectElement(selectElement);
+            select.SelectByText("Øst");
+
+            //tjekker om der er står øst efter vi har valgt dropwown menuen
+
+            IWebElement vistområde = _driver.FindElement(By.Id("PrisområdeNu"));
+            Assert.AreEqual("Øst", vistområde.Text);
 
 
 
