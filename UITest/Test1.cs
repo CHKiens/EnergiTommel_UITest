@@ -7,7 +7,10 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        private static readonly string DriverDirectory = "C:\\webdrivers";
+        private static readonly string DriverDirectory = "C:\\webdriver";
+        
+        private static readonly string macdriver = "/Users/david/Desktop/Webdriver mac/chromedriver";
+        
 
         private static IWebDriver _driver;
 
@@ -47,6 +50,19 @@ namespace UITest
             Assert.IsTrue(ShowsGraph);
 
             //tjekker at der nu er valgt københavn
+            
+            
+            
+            IWebElement prisvalg = _driver.FindElement(By.Id("Prisområde"));
+            SelectElement select = new SelectElement(prisvalg);
+            select.SelectByText("øst"); 
+            
+                //tjekker om der er står øst efter vi har valgt dropwown menuen
+                
+                IWebElement vistområde = _driver.FindElement(By.Id("PrisområdeNu"));
+            Assert.AreEqual("øst", vistområde.Text);
+
+
 
 
 
