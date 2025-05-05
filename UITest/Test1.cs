@@ -7,7 +7,7 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        private static readonly string DriverDirectory = "C:\\webdriver";
+       // private static readonly string DriverDirectory = "C:\\webdriver";
         
         private static readonly string macdriver = "/Users/david/Desktop/Webdriver mac/chromedriver";
         
@@ -17,7 +17,8 @@ namespace UITest
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            _driver = new ChromeDriver(DriverDirectory);
+            //_driver = new ChromeDriver(DriverDirectory);
+            _driver = new ChromeDriver(macdriver);
         }
 
         [ClassCleanup]
@@ -30,7 +31,7 @@ namespace UITest
         public void TestMethodFrontPage()
         {
 
-            string url = "";
+            string url = "http://127.0.0.1:5500/Index.html";
             _driver.Navigate().GoToUrl(url);
 
             //tjekker vi har åbnet rigtig side ved at tjekke titlen.
