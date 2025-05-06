@@ -47,13 +47,18 @@ namespace UITest
             
 
             //I toppen er prisen lige nu, kaldet energipris tjekker at der står en pris
-            IWebElement inputElement1 = _driver.FindElement(By.Id("energiPris"));
-            Assert.IsNotNull(inputElement1);
+            IWebElement Elpris = _driver.FindElement(By.Id("energiPris"));
+            Assert.IsNotNull(Elpris);
+            Assert.AreEqual("0.33884 DKK/kWh",Elpris.Text); 
 
+            
+            
             //tjekker at datoen er rigtig. Ned til timen
-            IWebElement inputElement2 = _driver.FindElement(By.Id("dato og tid nu"));
-            Assert.AreEqual(DateTime.Now.ToString("dd/MM/yyyy HH"), inputElement2.Text);
-
+            IWebElement DatoOgTid= _driver.FindElement(By.Id("DatoTid"));
+            Assert.AreEqual(DateTime.Now.ToString("dd.MM.yyyy, HH"), DatoOgTid.Text);
+            Assert.IsNotNull(DatoOgTid); 
+            
+            
             // tjekker om grafen bliver vist
             IWebElement inputElement3 = _driver.FindElement(By.TagName("Canvas"));
             bool ShowsGraph = inputElement3.Displayed;
