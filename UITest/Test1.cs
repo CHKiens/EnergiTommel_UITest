@@ -38,9 +38,13 @@ namespace UITest
         [TestMethod]
         public void TestMethodForside()
         {
+            
 
             string url = "http://127.0.0.1:5500/Index.html";
             _driver.Navigate().GoToUrl(url);
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            IWebElement element = wait.Until(d => d.FindElement(By.Id("DataLoaded"))); 
+            
 
             //I toppen er prisen lige nu, kaldet energipris tjekker at der står en pris
             IWebElement inputElement1 = _driver.FindElement(By.Id("energiPris"));
