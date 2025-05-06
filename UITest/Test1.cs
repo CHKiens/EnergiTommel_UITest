@@ -7,9 +7,9 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        private static readonly string DriverDirectory = "C:\\webdriver";
+        //private static readonly string DriverDirectory = "C:\\webdriver";
         
-        //private static readonly string macdriver = "/Users/david/Desktop/Webdriver mac/chromedriver";
+        private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
         
 
         private static IWebDriver _driver;
@@ -17,8 +17,8 @@ namespace UITest
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            _driver = new ChromeDriver(DriverDirectory);
-            //_driver = new ChromeDriver(macdriver);
+            //_driver = new ChromeDriver(DriverDirectory);
+            _driver = new ChromeDriver(macdriver);
         }
 
         [ClassCleanup]
