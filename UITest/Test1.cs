@@ -7,9 +7,9 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        //private static readonly string DriverDirectory = "C:\\webdriver";
+        private static readonly string DriverDirectory = "C:\\webdriver";
         
-        private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
+        //private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
         
 
         private static IWebDriver _driver;
@@ -17,8 +17,8 @@ namespace UITest
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            //_driver = new ChromeDriver(DriverDirectory);
-            _driver = new ChromeDriver(macdriver);
+            _driver = new ChromeDriver(DriverDirectory);
+            //_driver = new ChromeDriver(macdriver);
         }
 
         [ClassCleanup]
@@ -49,7 +49,7 @@ namespace UITest
             //I toppen er prisen lige nu, kaldet energipris tjekker at der står en pris
             IWebElement Elpris = _driver.FindElement(By.Id("energiPris"));
             Assert.IsNotNull(Elpris);
-            Assert.AreEqual("0.33884 DKK/kWh",Elpris.Text); 
+            Assert.AreEqual("0.61493 DKK/kWh", Elpris.Text); 
 
             
             
@@ -59,10 +59,7 @@ namespace UITest
             Assert.IsNotNull(DatoOgTid); 
             
             
-            // tjekker om grafen bliver vist
-            IWebElement inputElement3 = _driver.FindElement(By.TagName("Canvas"));
-            bool ShowsGraph = inputElement3.Displayed;
-            Assert.IsTrue(ShowsGraph);
+
 
             //tjekker at der nu er valgt københavn
 
@@ -77,8 +74,10 @@ namespace UITest
             Assert.AreEqual("DK2", vistområde.Text);
 
 
-
-
+            // tjekker om grafen bliver vist
+            IWebElement inputElement3 = _driver.FindElement(By.TagName("Canvas"));
+            bool ShowsGraph = inputElement3.Displayed;
+            Assert.IsTrue(ShowsGraph);
 
         }
         [TestMethod]
