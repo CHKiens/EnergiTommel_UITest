@@ -74,7 +74,7 @@ namespace UITest
             //tjekker om der er står øst efter vi har valgt dropwown menuen
 
             IWebElement vistområde = _driver.FindElement(By.Id("PrisområdeNu"));
-            Assert.AreEqual("Øst", vistområde.Text);
+            Assert.AreEqual("DK2", vistområde.Text);
 
 
 
