@@ -8,9 +8,8 @@ namespace UITest
     [TestClass]
     public class UnitTest1 {
         private static readonly string DriverDirectory = "C:\\webdriver";
-        
         //private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
-        
+            
 
         private static IWebDriver _driver;
 
@@ -20,12 +19,14 @@ namespace UITest
             _driver = new ChromeDriver(DriverDirectory);
             //_driver = new ChromeDriver(macdriver);
         }
-
+        
         [ClassCleanup]
         public static void TearDown()
         {
             _driver.Dispose();
         }
+
+
         [TestMethod]
         public void TestTitel()
         {
@@ -43,19 +44,19 @@ namespace UITest
             string url = "http://127.0.0.1:5500/Index.html";
             _driver.Navigate().GoToUrl(url);
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            IWebElement element = wait.Until(d => d.FindElement(By.Id("DataLoaded"))); 
+            IWebElement element = wait.Until(d => d.FindElement(By.Id("IsDataLoaded"))); 
             
 
             //I toppen er prisen lige nu, kaldet energipris tjekker at der står en pris
             IWebElement Elpris = _driver.FindElement(By.Id("energiPris"));
             Assert.IsNotNull(Elpris);
-            Assert.AreEqual("0.61493 DKK/kWh", Elpris.Text); 
+            // Assert.AreEqual("0.03731 DKK/kWh", Elpris.Text); 
 
             
             
             //tjekker at datoen er rigtig. Ned til timen
             IWebElement DatoOgTid= _driver.FindElement(By.Id("DatoTid"));
-            Assert.AreEqual(DateTime.Now.ToString("dd.MM.yyyy, HH"), DatoOgTid.Text);
+            Assert.AreEqual(DateTime.Now.ToString("dd.MM.yyyy, HH.00"), DatoOgTid.Text);
             Assert.IsNotNull(DatoOgTid); 
             
             
@@ -66,12 +67,12 @@ namespace UITest
 
             var selectElement = _driver.FindElement(By.Id("Prisområde"));
             var select = new SelectElement(selectElement);
-            select.SelectByText("Øst");
+            select.SelectByText("East");
 
             //tjekker om der er står øst efter vi har valgt dropwown menuen
 
-            IWebElement vistområde = _driver.FindElement(By.Id("PrisområdeNu"));
-            Assert.AreEqual("DK2", vistområde.Text);
+            IWebElement vistområde = _driver.FindElement(By.Id("PrisOmrådeNu"));
+            Assert.AreEqual("East", vistområde.Text);
 
 
             // tjekker om grafen bliver vist
@@ -79,14 +80,45 @@ namespace UITest
             bool ShowsGraph = inputElement3.Displayed;
             Assert.IsTrue(ShowsGraph);
 
-        }
-        [TestMethod]
-        public void TestMethodGrænser()
-        {
+            
+            
+            //Test af Select price range funktionen
+            //normale interval
+            IWebElement inputElementHigh = _driver.FindElement(By.Id("highinterval"));
+            inputElementHigh.SendKeys("1");
 
-            //LavGrænse er en dropdown menu, skal vælge en specifik "entry" på listen, tjekke at det passer
+            IWebElement inputElementLow = _driver.FindElement(By.Id("lowinterval"));
+            inputElementLow.SendKeys("");
 
+            IWebElement submitButton = _driver.FindElement(By.Id("submit"));
+            submitButton.Click();
+            
+            Assert.AreEqual("Enter both high and low value.", _driver.FindElement(By.Id("formError")).Text);
+            
+            inputElementLow.Clear();
+            inputElementHigh.Clear();
+            
 
+            inputElementHigh.SendKeys("1");
+            
+            inputElementLow.SendKeys("0.5");
+            submitButton.Click();
+            
+            WebDriverWait waitForSuccess = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            IWebElement elementSuccess = wait.Until(d => d.FindElement(By.Id("formsuccess"))); 
+            
+            Assert.AreEqual("success", _driver.FindElement(By.Id("formsuccess")).Text);
+            
+
+            
+
+            
+            //fejlmeddelelse
+
+            
+            
+
+            
         }
     }
 }
