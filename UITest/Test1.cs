@@ -7,7 +7,8 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        private static readonly string DriverDirectory = "C:\\webdriver";
+        //private static readonly string DriverDirectory = "C:\\webdriver";
+        private static readonly string macdriver = "/Users/momans/webdrivers";
         //private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
             
 
@@ -16,8 +17,8 @@ namespace UITest
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            _driver = new ChromeDriver(DriverDirectory);
-            //_driver = new ChromeDriver(macdriver);
+            //_driver = new ChromeDriver(DriverDirectory);
+            _driver = new ChromeDriver(macdriver);
         }
         
         [ClassCleanup]
@@ -30,7 +31,7 @@ namespace UITest
         [TestMethod]
         public void TestTitel()
         {
-            string url = "http://127.0.0.1:5500/Index.html";
+            string url = "http://127.0.0.1:5500/Interface/Index.html";
             _driver.Navigate().GoToUrl(url);
 
             //tjekker vi har åbnet rigtig side ved at tjekke titlen.
@@ -39,9 +40,7 @@ namespace UITest
         [TestMethod]
         public void TestMethodForside()
         {
-            
-
-            string url = "http://127.0.0.1:5500/Index.html";
+            string url = "http://127.0.0.1:5500/Interface/Index.html";
             _driver.Navigate().GoToUrl(url);
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             IWebElement element = wait.Until(d => d.FindElement(By.Id("IsDataLoaded"))); 
@@ -84,14 +83,20 @@ namespace UITest
             
             //Test af Select price range funktionen
             //normale interval
+
             IWebElement inputElementHigh = _driver.FindElement(By.Id("highinterval"));
             inputElementHigh.SendKeys("1");
 
             IWebElement inputElementLow = _driver.FindElement(By.Id("lowinterval"));
             inputElementLow.SendKeys("");
-
+            
             IWebElement submitButton = _driver.FindElement(By.Id("submit"));
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", submitButton);
+            Thread.Sleep(200); // lille delay for stabilitet
             submitButton.Click();
+            
+            WebDriverWait waitForError = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            IWebElement elementError = wait.Until(d => d.FindElement(By.Id("formError")));
             
             Assert.AreEqual("Enter both high and low value.", _driver.FindElement(By.Id("formError")).Text);
             
