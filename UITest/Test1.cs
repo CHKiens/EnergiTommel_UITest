@@ -7,17 +7,19 @@ namespace UITest
 {
     [TestClass]
     public class UnitTest1 {
-        //private static readonly string DriverDirectory = "C:\\webdriver";
-        private static readonly string macdriver = "/Users/momans/webdrivers";
-        //private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
-            
+        //Sti til windows driver (burde ikke behøves at ændre)
+        private static readonly string DriverDirectory = "C:\\webdriver";
+        
+        //Sti til mac driver (skal ændres til din mac driver sti)
+        private static readonly string macdriver = "/users/Shared/webdrivers/chromedriver";
+        
 
         private static IWebDriver _driver;
 
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
-            //_driver = new ChromeDriver(DriverDirectory);
+            _driver = new ChromeDriver(DriverDirectory);
             _driver = new ChromeDriver(macdriver);
         }
         
@@ -31,7 +33,7 @@ namespace UITest
         [TestMethod]
         public void TestTitel()
         {
-            string url = "http://127.0.0.1:5500/Interface/Index.html";
+            string url = "http://127.0.0.1:5500/Index.html";
             _driver.Navigate().GoToUrl(url);
 
             //tjekker vi har åbnet rigtig side ved at tjekke titlen.
@@ -40,7 +42,7 @@ namespace UITest
         [TestMethod]
         public void TestMethodForside()
         {
-            string url = "http://127.0.0.1:5500/Interface/Index.html";
+            string url = "http://127.0.0.1:5500/Index.html";
             _driver.Navigate().GoToUrl(url);
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             IWebElement element = wait.Until(d => d.FindElement(By.Id("IsDataLoaded"))); 
